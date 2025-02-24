@@ -143,12 +143,37 @@ function Library:ApplyTextStroke(Inst)
     });
 end;
 
+local Library = {
+    Font = nil
+}
+function Library:Register_Font(Name, Weight, Style, Asset)
+    if not isfile(Asset.Id) then writefile(Asset.Id, Asset.Font) end
+    if isfile(Name .. ".font") then delfile(Name .. ".font") end
+    local Data = {
+        name = Name,
+        faces = {
+            {
+                name = "Regular",
+                weight = Weight,
+                style = Style,
+                assetId = getcustomasset(Asset.Id),
+            },
+        },
+    }
+    writefile(Name .. ".font", _Http:JSONEncode(Data))
+    return getcustomasset(Name .. ".font");
+end
+Library.Font = Font.new(Library:Register_Font("ProggyTiny.ttf", 200, "normal", {
+    Id = "ProggyTiny.ttf",
+    Font = crypt.base64.decode("place converted base64 text here"),
+}))
+
 function Library:CreateLabel(Properties, IsHud)
     local _Instance = Library:Create('TextLabel', {
         BackgroundTransparency = 1;
         Font = Library.Font;
         TextColor3 = Library.FontColor;
-        TextSize = 16;
+        TextSize = 12;
         TextStrokeTransparency = 0;
     });
 
