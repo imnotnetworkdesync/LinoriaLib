@@ -37,6 +37,7 @@ local Library = {
     RiskColor = Color3.fromRGB(255, 50, 50),
 
     Black = Color3.new(0, 0, 0);
+    Font = nil;
 
     OpenedFrames = {};
     DependencyBoxes = {};
@@ -142,9 +143,6 @@ function Library:ApplyTextStroke(Inst)
     });
 end;
 
-local Library = {
-    Font = nil
-}
 function Library:Register_Font(Name, Weight, Style, Asset)
     if not isfile(Asset.Id) then writefile(Asset.Id, Asset.Font) end
     if isfile(Name .. ".font") then delfile(Name .. ".font") end
